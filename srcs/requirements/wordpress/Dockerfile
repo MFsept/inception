@@ -9,6 +9,8 @@ RUN mkdir -p /var/www/wordpress
 
 WORKDIR /var/www/wordpress
 
+COPY ./wp-config.php /var/www/wordpress/wp-config.php
+
 RUN wget https://wordpress.org/latest.tar.gz \
     && tar -xzf latest.tar.gz --strip-components=1 \
     && rm latest.tar.gz
