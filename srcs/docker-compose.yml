@@ -1,49 +1,21 @@
-version: "3.9"
+version:
 
 services:
   mariadb:
-    build: ./requirements/mariadb
-    container_name: mariadb
-    restart: always
-    volumes:
-      - db_data:/var/lib/mysql
+    web:
+      port: "3306:3306"
+
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wp_user
-      MYSQL_PASSWORD: wp_pass
-    networks:
-      - inception
+       MYSQL_HOST:
+       MY_SQL_USER:
+       MY_SQL_PASSWORD:
+       MY_SQL_DB:
 
   wordpress:
-    build: ./requirements/wordpress
-    container_name: wordpress
-    restart: always
-    volumes:
-      - wp_data:/var/www/wordpress
-    depends_on:
-      - mariadb
-    networks:
-      - inception
+    web:
+      port: "9000:9000"
+
 
   nginx:
-    build: ./requirements/nginx
-    container_name: nginx
-    restart: always
-    ports:
-      - "443:443"
-    volumes:
-      - wp_data:/var/www/wordpress   # partage du dossier WordPress
-    depends_on:
-      - wordpress
-    networks:
-      - inception
-
-volumes:
-  db_data:
-  wp_data:
-
-networks:
-  inception:
-    driver: bridge
-
+    web:
+      port: "4443:443"
