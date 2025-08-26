@@ -3,7 +3,7 @@ FROM debian:bookworm
 RUN apt-get update && apt-get install -y mariadb-server \
     && rm -rf /var/lib/apt/lists/*
 
-COPY ./my.cnf /etc/mysql/my.cnf
+#COPY ./my.cnf /etc/mysql/my.cnf
 
 RUN service mariadb start \
     && mysql -e "CREATE DATABASE wordpress;" \

@@ -1,21 +1,47 @@
-version:
+#version: "3.8"
 
 services:
   mariadb:
-    web:
-      port: "3306:3306"
+    build: ./requirements/mariadb/
+    ports:
+    -  "3306:3306"
 
     environment:
-       MYSQL_HOST:
-       MY_SQL_USER:
-       MY_SQL_PASSWORD:
-       MY_SQL_DB:
+       MYSQL_ROOT_PASSWORD: rootpass
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wp_user
+       MYSQL_PASSWORD: wp_pass
+
+    networks:
+    - inception
+  #  volumes:
+
 
   wordpress:
-    web:
-      port: "9000:9000"
+    ports: 
+    - "9000:9000"
+    build: ./requirements/wordpress/
+    depends_on:
+    - mariadb
+    networks:
+    - inception
+ #   volumes:
+
 
 
   nginx:
-    web:
-      port: "4443:443"
+    build: ./requirements/nginx/
+    ports:
+    - "4443:443"
+    depends_on:
+    - wordpress
+    networks:
+    - inception
+
+networks:
+    inception:
+      driver: bridge
+
+#volumes:
+#  maria_data:
+#  wordpress_data:
