@@ -14,7 +14,9 @@ services:
 
     networks:
     - inception
-  #  volumes:
+    volumes:
+    - maria_data:/var/lib/mysql
+    restart: unless-stopped
 
 
   wordpress:
@@ -25,7 +27,9 @@ services:
     - mariadb
     networks:
     - inception
- #   volumes:
+    volumes:
+    - wordpress_data:/var/www/wordpress
+    restart: unless-stopped
 
 
 
@@ -37,11 +41,12 @@ services:
     - wordpress
     networks:
     - inception
+    restart: unless-stopped
 
 networks:
     inception:
       driver: bridge
 
-#volumes:
-#  maria_data:
-#  wordpress_data:
+volumes:
+ maria_data:
+ wordpress_data:
