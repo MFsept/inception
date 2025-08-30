@@ -5,11 +5,14 @@ RUN apt-get update && apt-get install -y \
     wget unzip mariadb-client \
     && rm -rf /var/lib/apt/lists/*
 
+RUN rm -f /run/php/php8.2-fpm.sock
+
 RUN mkdir -p /var/www/wordpress
 
 WORKDIR /var/www/wordpress
 
 COPY ./wp-config.php /var/www/wordpress/wp-config.php
+COPY www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 RUN wget https://wordpress.org/latest.tar.gz \
     && tar -xzf latest.tar.gz --strip-components=1 \
@@ -20,7 +23,7 @@ RUN chown -R www-data:www-data /var/www/wordpress \
 
 EXPOSE 9000
 
-CMD ["/usr/sbin/php-fpm8.2", "-F"]
+CMD ["php-fpm8.2", "-F"]
 
 
 
