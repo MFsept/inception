@@ -25,6 +25,11 @@ services:
     build: ./requirements/wordpress/
     depends_on:
     - mariadb
+    environment:
+      MYSQL_HOST: mariadb
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
     - inception
     volumes:
@@ -41,6 +46,8 @@ services:
     - wordpress
     networks:
     - inception
+    volumes:
+    - wordpress_data:/var/www/wordpress  # Ajout du volume partagé
     restart: unless-stopped
 
 networks:

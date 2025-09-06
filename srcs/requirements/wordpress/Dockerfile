@@ -13,6 +13,7 @@ WORKDIR /var/www/wordpress
 
 COPY ./wp-config.php /var/www/wordpress/wp-config.php
 COPY www.conf /etc/php/8.2/fpm/pool.d/www.conf
+COPY init_wp.sh /usr/local/bin/init_wp.sh
 
 RUN wget https://wordpress.org/latest.tar.gz \
     && tar -xzf latest.tar.gz --strip-components=1 \
@@ -21,9 +22,15 @@ RUN wget https://wordpress.org/latest.tar.gz \
 RUN chown -R www-data:www-data /var/www/wordpress \
     && chmod -R 755 /var/www/wordpress
 
+RUN chmod +x /usr/local/bin/init_wp.sh
+
 EXPOSE 9000
 
-CMD ["php-fpm8.2", "-F"]
+# CMD ["php-fpm8.2", "-F"]
+
+#CMD ["/bin/bash", "-c", "/usr/local/bin/init_wp.sh && php-fpm8.2 -F"]
+
+CMD ["/usr/local/bin/init_wp.sh"]
 
 
 

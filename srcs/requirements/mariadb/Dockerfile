@@ -3,14 +3,10 @@ FROM debian:bookworm
 RUN apt-get update && apt-get install -y mariadb-server \
     && rm -rf /var/lib/apt/lists/*
 
-#COPY ./my.cnf /etc/mysql/my.cnf
+COPY 50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY init-db.sh /usr/local/bin/init-db.sh
+RUN chmod +x /usr/local/bin/init-db.sh
 
-RUN service mariadb start \
-    && mysql -e "CREATE DATABASE wordpress;" \
-    && mysql -e "CREATE USER 'wp_user'@'%' IDENTIFIED BY 'wp_pass';" \
-    && mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wp_user'@'%';" \
-    && mysql -e "FLUSH PRIVILEGES;"
-    
 EXPOSE 3306
 
-CMD ["mysqld_safe"]
+CMD ["/usr/local/bin/init-db.sh"]
