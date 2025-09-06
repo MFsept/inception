@@ -7,15 +7,15 @@ services:
     -  "3306:3306"
 
     environment:
-       MYSQL_ROOT_PASSWORD: rootpass
-       MYSQL_DATABASE: wordpress
-       MYSQL_USER: wp_user
-       MYSQL_PASSWORD: wp_pass
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
     networks:
     - inception
- #   volumes:
-##    - maria_data:/var/lib/mysql
+    volumes:
+    - maria_data:/var/lib/mysql
     restart: unless-stopped
 
 
@@ -27,8 +27,8 @@ services:
     - mariadb
     networks:
     - inception
- #   volumes:
-  #  - wordpress_data:/var/www/wordpress
+    volumes:
+    - wordpress_data:/var/www/wordpress
     restart: unless-stopped
 
 
@@ -47,6 +47,6 @@ networks:
     inception:
       driver: bridge
 
-#volumes:
-# maria_data:
-# wordpress_data:
+volumes:
+ maria_data:
+ wordpress_data:
