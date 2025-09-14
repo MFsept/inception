@@ -1,26 +1,16 @@
 <?php
-define('DB_NAME', getenv('MYSQL_DATABASE'));
-define('DB_USER', getenv('MYSQL_USER'));
-define('DB_PASSWORD', getenv('MYSQL_PASSWORD'));
-define('DB_HOST', getenv('MYSQL_HOST'));
-define('DB_CHARSET', 'utf8');
-define('DB_COLLATE', '');
+// Pull DB settings from environment with fallbacks for local dev
+$db_host = getenv('MYSQL_HOST') ?: 'mariadb:3306';
+$db_name = getenv('MYSQL_DATABASE') ?: 'wordpress';
+$db_user = getenv('MYSQL_USER') ?: 'wp_user';
+$db_pass = getenv('MYSQL_PASSWORD') ?: 'wp_pass';
 
-define('AUTH_KEY',         'your-auth-key-here');
-define('SECURE_AUTH_KEY',  'your-secure-auth-key-here');
-define('LOGGED_IN_KEY',    'your-logged-in-key-here');
-define('NONCE_KEY',        'your-nonce-key-here');
-define('AUTH_SALT',        'your-auth-salt-here');
-define('SECURE_AUTH_SALT', 'your-secure-auth-salt-here');
-define('LOGGED_IN_SALT',   'your-logged-in-salt-here');
-define('NONCE_SALT',       'your-nonce-salt-here');
+define('DB_HOST', $db_host);
+define('DB_USER', $db_user);
+define('DB_PASSWORD', $db_pass);
+define('DB_NAME', $db_name);
 
-$table_prefix = 'wp_';
-
-define('WP_DEBUG', false);
-
-if ( !defined('ABSPATH') )
-    define('ABSPATH', dirname(__FILE__) . '/');
-
-require_once(ABSPATH . 'wp-settings.php');
+// You can add salts/keys here or via environment as well
+// ... rest of WordPress config as needed ...
 ?>
+

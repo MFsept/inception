@@ -3,8 +3,7 @@
 services:
   mariadb:
     build: ./requirements/mariadb/
-    ports:
-    -  "3306:3306"
+  # Do not expose DB publicly; reachable on the internal network
 
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -20,8 +19,7 @@ services:
 
 
   wordpress:
-    ports: 
-    - "9000:9000"
+  # Do not expose php-fpm publicly; Nginx will proxy to it internally
     build: ./requirements/wordpress/
     depends_on:
     - mariadb
