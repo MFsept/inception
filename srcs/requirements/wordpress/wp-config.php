@@ -1,16 +1,26 @@
 <?php
-// Pull DB settings from environment with fallbacks for local dev
-$db_host = getenv('MYSQL_HOST') ?: 'mariadb:3306';
-$db_name = getenv('MYSQL_DATABASE') ?: 'wordpress';
-$db_user = getenv('MYSQL_USER') ?: 'wp_user';
-$db_pass = getenv('MYSQL_PASSWORD') ?: 'wp_pass';
+define('DB_NAME', getenv('MYSQL_DATABASE') ?: 'wordpress');
+define('DB_USER', getenv('MYSQL_USER') ?: 'wp_user');
+define('DB_PASSWORD', getenv('MYSQL_PASSWORD') ?: 'usermdpinception');
+define('DB_HOST', getenv('MYSQL_HOST') ?: 'mariadb');
+define('DB_CHARSET', 'utf8');
+define('DB_COLLATE', '');
 
-define('DB_HOST', $db_host);
-define('DB_USER', $db_user);
-define('DB_PASSWORD', $db_pass);
-define('DB_NAME', $db_name);
+$table_prefix = 'wp_';
 
-// You can add salts/keys here or via environment as well
-// ... rest of WordPress config as needed ...
-?>
+define('WP_DEBUG', true);
+define('WP_DEBUG_DISPLAY', true);
+@ini_set('display_errors', 1);
+define('AUTH_KEY',         'put-your-unique-phrase-here');
+define('SECURE_AUTH_KEY',  'put-your-unique-phrase-here');
+define('LOGGED_IN_KEY',    'put-your-unique-phrase-here');
+define('NONCE_KEY',        'put-your-unique-phrase-here');
+define('AUTH_SALT',        'put-your-unique-phrase-here');
+define('SECURE_AUTH_SALT', 'put-your-unique-phrase-here');
+define('LOGGED_IN_SALT',   'put-your-unique-phrase-here');
+define('NONCE_SALT',       'put-your-unique-phrase-here');
+
+if ( !defined('ABSPATH') )
+    define('ABSPATH', __DIR__ . '/');
+require_once ABSPATH . 'wp-settings.php';
 
