@@ -68,7 +68,7 @@ require_once('/var/www/wordpress/wp-config.php');
 require_once('/var/www/wordpress/wp-admin/includes/upgrade.php');
 
 // Installer WordPress
-wp_install('Mon Site WordPress', 'admin', 'admin@localhost', true, '', 'admin123');
+wp_install('Mon Site WordPress', 'admin', 'admin@localhost', true, '', 'adminmdpinception');
 
 // Créer quelques pages de contenu par défaut
 wp_insert_post(array(
