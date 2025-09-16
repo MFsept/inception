@@ -28,6 +28,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MY_DOMAIN_NAME: ${MY_DOMAIN_NAME}
     networks:
     - inception
     volumes:
@@ -45,7 +46,7 @@ services:
     networks:
     - inception
     volumes:
-    - wordpress_data:/var/www/wordpress  # Ajout du volume partagé
+    - wordpress_data:/var/www/wordpress
     restart: unless-stopped
 
 networks:
