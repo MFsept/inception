@@ -32,7 +32,6 @@ define('NONCE_SALT',       'nonce-salt-$(date +%s)');
 \$table_prefix = 'wp_';
 define('WP_DEBUG', false);
 
-// Éviter les redirections automatiques vers wp-admin/install.php
 define('WP_SITEURL', 'https://$MY_DOMAIN_NAME:4443');
 define('WP_HOME', 'https://$MY_DOMAIN_NAME:4443');
 
@@ -56,10 +55,8 @@ define('WP_INSTALLING', true);
 require_once('/var/www/wordpress/wp-config.php');
 require_once('/var/www/wordpress/wp-admin/includes/upgrade.php');
 
-// Installer WordPress
 wp_install('Mon Site WordPress', 'admin', 'admin@localhost', true, '', 'adminmdpinception');
 
-// Créer quelques pages de contenu par défaut
 wp_insert_post(array(
     'post_title' => 'Bienvenue sur mon site',
     'post_content' => '<h2>Bienvenue !</h2><p>Voici mon site WordPress configuré automatiquement avec Docker.</p>',
