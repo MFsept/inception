@@ -1,24 +1,16 @@
 #!/bin/bash
 
-echo "=== Démarrage WordPress avec installation automatique ==="
 
-# Créer les répertoires nécessaires
 mkdir -p /var/log
 touch /var/log/fpm-php.www.log
 chown www-data:www-data /var/log/fpm-php.www.log
 
-# Attendre MariaDB
-echo "Attente de MariaDB..."
 while ! mysqladmin ping -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" --silent; do
-    echo "En attente de MariaDB..."
     sleep 2
 done
-echo "MariaDB prêt !"
 
-# Supprimer tout wp-config existant pour éviter les conflits
 rm -f /var/www/wordpress/wp-config.php /var/www/wordpress/wp-config-sample.php
 
-# Créer un wp-config.php complet avec toutes les constantes WordPress
 cat > /var/www/wordpress/wp-config.php << EOF
 <?php
 define('DB_NAME', '$MYSQL_DATABASE');
@@ -50,17 +42,14 @@ if ( !defined('ABSPATH') )
 require_once(ABSPATH . 'wp-settings.php');
 EOF
 
-# Permissions
+
 chown -R www-data:www-data /var/www/wordpress
 chmod -R 755 /var/www/wordpress
 
-# Vérifier si WordPress est déjà installé en vérifiant les tables
 WP_INSTALLED=$(mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" -e "SHOW TABLES LIKE 'wp_users';" 2>/dev/null | wc -l)
 
 if [ "$WP_INSTALLED" -eq 0 ]; then
-    echo "Installation automatique de WordPress..."
     
-    # Script PHP pour installer WordPress automatiquement
     cat > /tmp/wp_install.php << 'PHPEOF'
 <?php
 define('WP_INSTALLING', true);
@@ -78,18 +67,14 @@ wp_insert_post(array(
     'post_type' => 'page'
 ));
 
-echo "WordPress installé avec succès !";
 ?>
 PHPEOF
 
-    # Exécuter l'installation
     php /tmp/wp_install.php
     rm -f /tmp/wp_install.php
     
-    echo "WordPress configuré automatiquement !"
 else
-    echo "WordPress déjà installé, pas de réinstallation."
+    echo "WordPress Already install."
 fi
 
-echo "Démarrage PHP-FPM..."
 exec php-fpm8.2 -F

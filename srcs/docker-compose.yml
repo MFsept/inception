@@ -1,9 +1,6 @@
-#version: "3.8"
-
 services:
   mariadb:
     build: ./requirements/mariadb/
-  # Do not expose DB publicly; reachable on the internal network
 
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -19,7 +16,6 @@ services:
 
 
   wordpress:
-  # Do not expose php-fpm publicly; Nginx will proxy to it internally
     build: ./requirements/wordpress/
     depends_on:
     - mariadb
