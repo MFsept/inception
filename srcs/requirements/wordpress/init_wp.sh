@@ -32,8 +32,8 @@ define('NONCE_SALT',       'nonce-salt-$(date +%s)');
 \$table_prefix = 'wp_';
 define('WP_DEBUG', false);
 
-define('WP_SITEURL', 'https://$MY_DOMAIN_NAME:4443');
-define('WP_HOME', 'https://$MY_DOMAIN_NAME:4443');
+define('WP_SITEURL', 'https://$MY_DOMAIN_NAME');
+define('WP_HOME', 'https://$MY_DOMAIN_NAME');
 
 if ( !defined('ABSPATH') )
     define('ABSPATH', dirname(__FILE__) . '/');
