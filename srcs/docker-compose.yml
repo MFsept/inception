@@ -2,39 +2,38 @@ services:
   mariadb:
     build: ./requirements/mariadb/
 
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    image: mariadb
+    container_name: mariadb
+    env_file:
+    - .env
 
     networks:
     - inception
     volumes:
     - maria_data:/var/lib/mysql
-    restart: unless-stopped
+    restart: always
 
 
   wordpress:
     build: ./requirements/wordpress/
     depends_on:
     - mariadb
-    environment:
-      MYSQL_HOST: mariadb
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MY_DOMAIN_NAME: ${MY_DOMAIN_NAME}
+    image: wordpress
+    container_name: wordpress
+    env_file:
+    - .env
     networks:
     - inception
     volumes:
     - wordpress_data:/var/www/wordpress
-    restart: unless-stopped
+    restart: always
 
 
 
   nginx:
     build: ./requirements/nginx/
+    image: nginx
+    container_name: nginx
     ports:
     - "443:443"
     depends_on:
@@ -43,7 +42,7 @@ services:
     - inception
     volumes:
     - wordpress_data:/var/www/wordpress
-    restart: unless-stopped
+    restart: always
 
 networks:
     inception:

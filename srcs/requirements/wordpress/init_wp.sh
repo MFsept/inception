@@ -55,11 +55,13 @@ define('WP_INSTALLING', true);
 require_once('/var/www/wordpress/wp-config.php');
 require_once('/var/www/wordpress/wp-admin/includes/upgrade.php');
 
-wp_install('Mon Site WordPress', 'admin', 'admin@localhost', true, '', 'adminmdpinception');
+wp_install('Mon Site WordPress', 'boss', 'admin@localhost', true, '', 'bosspassword');
+
+wp_create_user('user', 'userpassword', 'user@localhost');
 
 wp_insert_post(array(
     'post_title' => 'Bienvenue sur mon site',
-    'post_content' => '<h2>Bienvenue !</h2><p>Voici mon site WordPress configuré automatiquement avec Docker.</p>',
+    'post_content' => '<h2>Bienvenue !</h2><p>Voici mon site WordPress preconfigure avec Docker 🐳​.</p>',
     'post_status' => 'publish',
     'post_type' => 'page'
 ));
