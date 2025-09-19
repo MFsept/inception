@@ -4,9 +4,11 @@ services:
 
     image: mariadb
     container_name: mariadb
-    env_file:
-    - .env
-
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
     - inception
     volumes:
@@ -20,8 +22,12 @@ services:
     - mariadb
     image: wordpress
     container_name: wordpress
-    env_file:
-    - .env
+    environment:
+      MYSQL_HOST: mariadb
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MY_DOMAIN_NAME: ${MY_DOMAIN_NAME}
     networks:
     - inception
     volumes:
