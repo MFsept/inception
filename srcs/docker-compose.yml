@@ -11,6 +11,8 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
     - inception
+    #volumes:
+    #- /home/mfernand/data/maria_data:/var/lib/mysql
     volumes:
     - maria_data:/var/lib/mysql
     restart: always
@@ -30,6 +32,8 @@ services:
       MY_DOMAIN_NAME: ${MY_DOMAIN_NAME}
     networks:
     - inception
+    #volumes:
+    #- /home/mfernand/data/wordpress_data:/var/www/wordpress
     volumes:
     - wordpress_data:/var/www/wordpress
     restart: always
@@ -42,10 +46,13 @@ services:
     container_name: nginx
     ports:
     - "443:443"
+    - 80:80
     depends_on:
     - wordpress
     networks:
     - inception
+    #volumes:
+    #- /home/mfernand/data/wordpress_data:/var/www/wordpress
     volumes:
     - wordpress_data:/var/www/wordpress
     restart: always
@@ -55,5 +62,5 @@ networks:
       driver: bridge
 
 volumes:
- maria_data:
- wordpress_data:
+  maria_data:
+  wordpress_data:
