@@ -11,8 +11,6 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
     - inception
-    # volumes:
-    # - ~/data/mariadb/maria_data:/var/lib/mysql
     volumes:
     - maria_data:/var/lib/mysql
     restart: always
@@ -32,8 +30,6 @@ services:
       MY_DOMAIN_NAME: ${MY_DOMAIN_NAME}
     networks:
     - inception
-    # volumes:
-    # - ~/data/wordpress/wordpress_data:/var/www/wordpress
     volumes:
     - wordpress_data:/var/www/wordpress
     restart: always
@@ -50,8 +46,6 @@ services:
     - wordpress
     networks:
     - inception
-    # volumes:
-    # - ~/data/wordpress_data:/var/www/wordpress
     volumes:
     - wordpress_data:/var/www/wordpress
     restart: always
@@ -62,4 +56,14 @@ networks:
 
 volumes:
   maria_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/mfernand/data/maria_data
   wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/mfernand/data/wordpress_data
